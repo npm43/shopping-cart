@@ -37,7 +37,9 @@ def to_usd(my_price):
     return f"${my_price:,.2f}" #> $12,000.71
 
 
-# TODO: write some Python code here to produce the desired output
+#
+# INFO CAPTURE / INPUT
+#
 
 total_price = 0
 selected_ids = []
@@ -50,6 +52,41 @@ while True:
         selected_id = input("You did not enter a valid ID number. Please try again: ")
         selected_ids.append(selected_id)
     else:
+        #matching_products = [p for p in products if str(p["id"]) == str(selected_id)]
+        #matching_product = matching_products[0]
+        #total_price = total_price + matching_product["price"]
+        #print("SELECTED PRODUCT:", matching_product["name"], str(matching_product["price"]))
         selected_ids.append(selected_id)
 
-print(selected_ids)
+#
+# INFO DISPLAY / OUTPUT
+#
+
+from datetime import datetime
+current_time = datetime.now()
+dt_string = current_time.strftime("%d/%m/%Y %H:%M:%S")
+#help from Anthony Redfern
+
+print("-----------------------------------")
+print("NOLAN'S GROCERY STORE")
+print("-----------------------------------")
+print("Web: www.nolansgrocerystore.com")
+print("Phone: 1-123-456-7890")
+print("Checkout Time:", dt_string)
+print("-----------------------------------")
+
+for selected_id in selected_ids:
+    matching_products = [p for p in products if str(p["id"]) == str(selected_id)]
+    matching_product = matching_products[0]
+    total_price = total_price + matching_product["price"]
+    print("SELECTED PRODUCTS:", matching_product["name"], "(" + to_usd(float(matching_product["price"])) + ")")
+print("-----------------------------------")
+subtotal = str(total_price)
+print("SUBTOTAL:", to_usd(float(subtotal)))
+tax_owed = float(subtotal)*0.06
+print("TAX OWED:", to_usd(tax_owed))
+total_amount = tax_owed + float(subtotal)
+print("TOTAL:", to_usd(total_amount))
+print("-----------------------------------")
+print("THANK YOU FOR SHOPPING WITH US! HAVE A NICE DAY!")
+print("-----------------------------------")
